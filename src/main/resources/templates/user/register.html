@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Rejestracja</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('registerForm')"/>
+<main class="grey darken-4">
+    <center>
+        <div class="section"></div>
+
+        <h3 class="blue-text">Rejestracja</h3>
+        <div class="section"></div>
+
+        <div class="container">
+            <div class="z-depth-1 grey darken-3 row" style="display: inline-block; padding: 32px 48px 0px 48px;">
+                <h5 class="blue-text">Wypełnij formularz aby się zarejestrować.</h5>
+
+                <form class="col s12" th:method="POST" th:object="${userCommand}">
+                    <div class='row'>
+                        <div class='col s12'>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12" th:if="${#fields.hasErrors('*')}">
+                            <p class="red-text" th:each="err : ${#fields.errors('*')}" th:text="${err}">
+                            <div th:if="${err != null}">
+                                <script th:inline="javascript">
+                                    /*<![CDATA[*/
+                                    var message = [[${message}]];
+                                    Materialize.toast(message, 4000);
+                                    /*]]>*/
+                                </script>
+                            </div>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class="input-field col s12">
+                            <input type="text" id="username" th:field="*{username}" class="validate" required="true" autofocus="true"/>
+                            <label for="username">Login</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class='input-field col s12'>
+                            <input id="password" type="password" th:field="*{password}" class="validate" required="true" autofocus="true"/>
+                            <label for='password'>Wprowadź hasło</label>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="confirmPassword" type="password" th:field="*{passwordConfirm}" class="validate" required="true" autofocus="true"/>
+                            <label for="confirmPassword">Potwierdź hasło</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class="input-field col s12">
+                            <input type="text" id="firstname" th:field="*{firstname}" class="validate" required="true" autofocus="true"/>
+                            <label for="firstname">Imię</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class="input-field col s12">
+                            <input type="text" id="surname" th:field="*{surname}" class="validate" required="true" autofocus="true"/>
+                            <label for="surname">Nazwisko</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class="input-field col s12">
+                            <input type="text" id="adress" th:field="*{adress}" class="validate" required="true" autofocus="true"/>
+                            <label for="adress">Adres</label>
+                        </div>
+                    </div>
+
+                    <div class='row'>
+                        <div class="input-field col s12">
+                            <input type="text" id="city" th:field="*{city}" class="validate" required="true" autofocus="true"/>
+                            <label for="city">Miasto</label>
+                        </div>
+                    </div>
+
+                    <br />
+                    <center>
+                        <div class='row'>
+                            <input
+                                    type="hidden"
+                                    th:name="${_csrf.parameterName}"
+                                    th:value="${_csrf.token}" />
+                            <button type="submit" name='btn_login' class='col s12 btn btn-large waves-effect blue'>Zarejestruj</button>
+                        </div>
+                    </center>
+                </form>
+            </div>
+        </div>
+        <a href="/user/login" th:href="@{/user/login}">Masz już konto? Zaloguj się!</a>
+    </center>
+    <div class="section"></div>
+    <div class="section"></div>
+</main>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

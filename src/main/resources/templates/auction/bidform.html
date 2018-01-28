@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/shared/header :: header-css"/>
+    <title>Dodawanie/Edycja</title>
+</head>
+<body>
+<div th:replace="/shared/header :: header('itemForm')"/>
+
+<main class="grey darken-4">
+    <div class="section grey darken-3">
+        <h3 class="center blue-text">Licytacja Przedmiotu</h3>
+    </div>
+    <div class="container">
+        <div class="section"></div>
+        <div class="col s12" th:object="${auction}">
+            <div class="row">
+                <div class="input-field col s12 grey-text darken-3 center">
+                    <img th:src="@{'/'+${auction.item.photopath}}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 grey-text darken-3">
+                    <div class="left orange-text">Cena: [[*{#numbers.formatDecimal(item.price,2,2,'POINT')}]] zł</div>
+                    <div class="right cyan-text">Obecny Oferant:
+                        <span th:text="*{user != null} ? *{user.username} : 'Brak oferanta'"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12 grey-text darken-3">
+
+                </div>
+                <div class="input-field col s12 grey-text darken-3">
+                    <a th:href="@{/auction/bid/bidbidder/{id}(id=${auction.id})}" class="center btn btn-large btn-floating waves-effect waves-light pulse" type="submit" name="action">
+                        <i class="material-icons right">gavel</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="/shared/footer :: footer"></div>
+</body>
+</html>

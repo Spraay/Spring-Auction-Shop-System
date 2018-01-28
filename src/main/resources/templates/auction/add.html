@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="/shared/header :: header-css"/>
+    <title>Dodawanie/Edycja</title>
+</head>
+<body>
+<div th:replace="/shared/header :: header('itemForm')"/>
+
+<main class="grey darken-4">
+    <div class="section grey darken-3">
+        <h3 class="center blue-text">Dodawanie/Edycja Aukcji</h3>
+    </div>
+    <div class="container">
+        <div class="section"></div>
+        <form class="col s12" th:method="POST" th:object="${item}" th:action="@{/item/add/}">
+            <button style="position: relative; top: -59px;" class="right btn btn-large btn-floating waves-effect waves-light pulse" type="submit" name="action">
+                <i class="material-icons right">send</i>
+            </button>
+
+            <div class="row">
+                <div class="input-field col s12 grey-text darken-3">
+                    <i class="material-icons prefix">format_italic</i>
+                    <input id="name" type="text" name="name" th:value="*{name}"
+                           class="form-control" th:classappend="${#fields.hasErrors('name')}?'is-invalid'"
+                           required="true" autofocus="true"/>
+
+                    <label for="name">Nazwa</label>
+                </div>
+                <div class="error text-danger" th:if="${#fields.hasErrors('name')}">
+                    <span th:each="err : ${#fields.errors('name')}" th:text="${err}"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="input-field col s12 grey-text darken-3">
+                    <i class="material-icons prefix">euro_symbol</i>
+                    <input id="price" name="price" type="text" th:field="*{price}"
+                           class="form-control" th:classappend="${#fields.hasErrors('price')}?'is-invalid'"
+                           placeholder="cena" required="true"/>
+
+                    <label for="price">Cena</label>
+                </div>
+                <div class="error text-danger" th:if="${#fields.hasErrors('price')}">
+                    <p th:each="err : ${#fields.errors('price')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <label for="quantity" class="col s2">Ilość</label>
+                <div class="input-field col s10 grey-text darken-3">
+                    <input id="quantity" name="quantity" type="range" th:field="*{quantity}"
+                           required="true"
+                           min="1"
+                           max="100"
+                           th:classappend="${#fields.hasErrors('quantity')}?'red-text'"
+                    />
+                </div>
+                <div class="error text-danger" th:if="${#fields.hasErrors('quantity')}">
+                    <p th:each="err : ${#fields.errors('price')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="input-field col s12 grey-text darken-3">
+                <i class="material-icons prefix">folder</i>
+                <select th:field="*{category.id}"
+                        th:classappend="${#fields.hasErrors('category.id')}?'is-invalid'">
+                    <option value="-1">Kategoria</option>
+                    <option th:each="cat : ${categories}"
+                            th:value="${cat.id}"
+                            th:text=" ${cat.name}"
+                    />
+                </select>
+                <div class="error text-danger" th:if="${#fields.hasErrors('category.id')}">
+                    <p th:each="err : ${#fields.errors('category.id')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea th:field="*{description}" id="description" class="materialize-textarea grey-text darken-3"></textarea>
+                            <label for="description">Opis</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="row">
+                <div>
+                    <input type="hidden" th:field="*{id}"/>
+                    <input
+                            type="hidden"
+                            th:name="${_csrf.parameterName}"
+                            th:value="${_csrf.token}"/>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+<div th:replace="/shared/footer :: footer"></div>
+</body>
+</html>

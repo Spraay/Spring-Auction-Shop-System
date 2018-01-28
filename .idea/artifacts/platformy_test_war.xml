@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="platformy-test:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="platformy-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="platformy-test:war exploded" />
+    </root>
+  </artifact>
+</component>

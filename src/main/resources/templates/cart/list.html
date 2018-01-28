@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="/shared/header :: header-css"/>
+    <title>Przedmioty w koszyku</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('itemList')"/>
+
+<main class="grey darken-4">
+    <div class="section"></div>
+    <div class="section">
+        <div class="row col s12 center">
+            <h3 class="teal-text">Przedmioty w koszyku</h3>
+        </div>
+    </div>
+
+    <div class="container">
+        <table class="grey darken-3">
+            <thead class="white-text">
+            <tr>
+                <!--<th>ID</th>-->
+                <!--<th>Item ID</th>-->
+                <th>Nazwa przedmiotu</th>
+                <th>Cena</th>
+                <th>Opcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cart : ${userCart}">
+                <!--<td><span class="blue-text">[[${cart.id}]]</span></td>-->
+                <!--<td><span class="blue-text">[[${cart.item.id}]]</span></td>-->
+                <td><span class="blue-text">[[${cart.item.name}]]</span></td>
+                <td><span class="blue-text">[[${#numbers.formatDecimal(cart.item.price,2,2,'POINT')}]] zł</span></td>
+
+                <td class="center">
+                    <div style="position: relative; top: 43px;">
+                        <div class="fixed-action-btn horizontal" style="position: absolute; display: inline-block; right: 24px;">
+                            <a class="btn-floating orange">
+                                <i class="large material-icons">mode_edit</i>
+                            </a>
+                            <ul>
+                                <li><a href="/cart/delete/" th:href="@{/cart/delete/{id}(id=${cart.id})}" class="btn-floating red" style="transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;"><i class="material-icons">delete_forever</i></a></li>
+                                <li><a href="/item/details/" th:href="@{/item/details/{id}(id=${cart.item.id})}" class="btn-floating blue" style="transform: scaleY(0.4) scaleX(0.4) translateY(0px) translateX(40px); opacity: 0;"><i class="material-icons">info_outline</i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+
+                <td colspan="2">
+
+                </td>
+                <td colspan="2" class="right" th:classappend="${itemsPrice<=session.user.getWallet()}?'green-text':'red-text'">Razem: [[${#numbers.formatDecimal(itemsPrice,2,2,'POINT')}]] zł</td>
+
+            </tr>
+            <tr>
+                <td colspan="5">
+                    <a class="btn waves-effect waves-light pulse right"
+                       style="position: relative; top: 34px; left: -30px;"
+                       type="submit" name="action"
+                        th:href="@{/order/add}"
+                    >
+                        Zamów
+                        <i class="material-icons right">send</i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="section"></div>
+    <div class="section" style="height: 100%"></div>
+</main>
+<div th:replace="/shared/footer :: footer"></div>
+</body>
+</html>

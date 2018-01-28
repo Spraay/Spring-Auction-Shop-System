@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="/shared/header :: header-css"/>
+    <title>Zamówienia</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('orderList')"/>
+<main class="grey darken-4">
+    <div class="section"></div>
+    <div class="section">
+        <div class="row col s12 center">
+            <h3 class="teal-text">Zamówienia</h3>
+        </div>
+    </div>
+    <div class="container">
+        <table class="grey darken-3">
+            <thead class="white-text">
+            <tr>
+                <!--<th>ID</th>-->
+                <!--<th>Item ID</th>-->
+                <th>Nazwa przedmiotu</th>
+                <th>Cena</th>
+                <th>Opcje</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${userOrders}">
+                <td><span class="blue-text">[[${order.id}]]</span></td>
+                <td><span class="blue-text">[[${order.item_name}]]</span></td>
+                <td><span class="blue-text">[[${#numbers.formatDecimal(order.item_price,2,2,'POINT')}]] zł</span></td>
+                <!--<td class="center">-->
+                    <!--<div style="position: relative; top: 43px;">-->
+                        <!--<div class="fixed-action-btn horizontal" style="position: absolute; display: inline-block; right: 24px;">-->
+                            <!--<a class="btn-floating orange">-->
+                                <!--<i class="large material-icons">mode_edit</i>-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</td>-->
+            </tr>
+            <tr>
+
+                <td colspan="2">
+
+                </td>
+                <!--<td colspan="2" class="right" th:classappend="${ordersPrice<=session.user.getWallet()}?'green-text':'red-text'">Razem zapłacono: [[${#numbers.formatDecimal(ordersPrice,2,2,'POINT')}]] zł</td>-->
+
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <div class="section"></div>
+    <div class="section"></div>
+</main>
+<div th:replace="/shared/footer :: footer"></div>
+</body>
+</html>

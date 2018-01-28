@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:replace="/shared/header :: header-css"/>
+    <title>Detale Aukcji</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('auctionDetails')"/>
+
+<div th:with="boundMin=${1}, boundMax=${4000000}">
+    <main class="grey darken-4">
+        <div class="container">
+            <div class="row">
+                <div class="col l4 m6 s12 gray" th:object="${auction}">
+                    <div class="card grey darken-3">
+                        <div class="card-image grey darken-2">
+                            <img th:src="@{'/'+${auction.item.photopath}}">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title blue-text">[[*{item.name}]]</span>
+                            <span class="cart-title blue-text">[[*{item.category.name}]]</span>
+                        </div>
+                        <div class="card-action">
+                            <div class="left orange-text">Cena: [[*{#numbers.formatDecimal(item.price,2,2,'POINT')}]] zł</div>
+                            <div class="right red-text">Oferant:
+                                <span th:text="*{user != null} ? *{user.username} : 'Brak oferanta'"></span>
+                            </div>
+                            <div class="row"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<div th:replace="/shared/footer :: footer"></div>
+</body>
+</html>
+
+
+

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="pager(mainUrl, page)"
+     th:with="
+         firstPageUrl=${mainUrl}+'?page=0&size='+${page.size},
+         prevPageUrl=${mainUrl}+'?page='+${page.number - 1}+'&size='+${page.size},
+         nextPageUrl=${mainUrl}+'?page='+${page.number + 1}+'&size='+${page.size},
+         lastPageUrl=${mainUrl}+'?page='+${page.totalPages - 1}+'&size='+${page.size}
+    "
+     class="row"
+>
+
+
+    <ul class="pagination row left">
+        <div style="padding: 5px;" class="blue-text" >Strona: </div>
+        <li th:class="${page.first}?'disabled'">
+            <a th:href="${page.first?'#':firstPageUrl}">
+                <i class="material-icons">chevron_left</i>
+            </a>
+        </li>
+
+
+        <li  th:classappend="${pageIdx==page.number}?'active blue'" th:each="pageIdx : ${#numbers.sequence( 0, page.totalPages-1)}"
+            th:with="pageUrl=${mainUrl}+'?page='+${pageIdx}+'&size='+${page.size}"
+        >
+            <a th:href="${pageUrl}">[[${pageIdx+1}]]</a>
+        </li>
+
+
+        <li th:class="${page.last}?'disabled'">
+            <a th:href="${page.last?'#':lastPageUrl}">
+                <i class="material-icons">chevron_right</i>
+            </a>
+        </li>
+    </ul>
+
+
+    <ul class="pagination row right" style="float: right" th:with="pageSizes = ${ {1, 3, 6, 12, 24} }">
+        <div style="padding: 5px;" class="blue-text" >Elementów na stronę: </div>
+        <li th:each="size : ${pageSizes}" th:classappend="${page.size == size}?'active blue'"
+            th:with="pageUrl=${mainUrl}+'?page=0&size='+${size}"
+        >
+            <a th:href="${pageUrl}">
+                <span>[[${size}]]</span>
+            </a>
+        </li>
+    </ul>
+    <br><br>
+</div>
+
+
+</body>
+</html>

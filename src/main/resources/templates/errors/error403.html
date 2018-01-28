@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Odmowa Dostępu!</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('home')"/>
+
+<main class="grey darken-4">
+    <div>
+        <h1 class="white-text">403 - Odmowa Dostępu!</h1>
+        <div class="white-text">
+            Nie masz dostępu do tej strony, zaloguj się, lub poproś administratora o nadanie dostępu.
+        </div>
+    </div>
+
+</main>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>

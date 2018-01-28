@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <div th:fragment="header-css">
+        <!--Import Google Icon Font-->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- this is header-css -->
+        <link rel="stylesheet" type="text/css"
+              href="webjars/materializecss/0.100.2/css/materialize.min.css"
+              th:href="@{/webjars/materializecss/0.100.2/css/materialize.min.css}" />
+        <link rel="stylesheet" type="text/css"
+              href="statics/css/main.css"
+              th:href="@{/statics/css/main.css}"/>
+
+    </div>
+</head>
+<body>
+<div th:fragment="header(pageName)" >
+    <!-- Dropdown Structure -->
+    <ul id="dropdown_item" class="dropdown-content" style="z-index: 10000001;">
+        <li th:classappend="${pageName eq 'itemList'}?'active'" ><a href="/item/list" th:href="@{/item/list}"><i class="material-icons left">add_shopping_cart</i>'Kup Teraz'</a></li>
+        <li th:classappend="${pageName eq 'itemList'}?'active'" ><a href="/auction/list" th:href="@{/auction/list}"><i class="material-icons left">gavel</i>Licytacje</a></li>
+    </ul>
+    <ul id="dropdown_user" class="dropdown-content" style="z-index: 10000001;">
+        <li sec:authorize="isAuthenticated()" th:classappend="${pageName eq 'cartList'}?'active'" ><a href="/cart/list" th:href="@{/cart/list}"><i class="material-icons left">shopping_cart</i>Koszyk <span class="new badge green" style="padding: 0;" data-badge-caption="">[[${session.cartlist.size()}]]</span></a></li>
+        <li sec:authorize="isAuthenticated()" th:classappend="${pageName eq 'balanceAdd'}?'active'" ><a href="/user/addbalace" th:href="@{/user/addbalance}"><i class="material-icons left">add</i>Dodaj środki</a></li>
+        <li sec:authorize="isAuthenticated()"  th:classappend="${pageName eq 'orderList'}?'active'" ><a href="/order/list" th:href="@{/order/list}"><i class="material-icons left">receipt</i>Twoje Zamówienia</a></li>
+        <li sec:authorize="isAuthenticated()">
+            <a href="#" onclick="document.getElementById('logout').submit()"><i class="material-icons left">power_settings_new</i>Wyloguj się</a>
+            <form th:action="@{/logout}" id="logout" method="post" style="display: none;">
+
+                <input
+                        type="hidden"
+                        th:name="${_csrf.parameterName}"
+                        th:value="${_csrf.token}"/>
+            </form>
+        </li>
+    </ul>
+    <div class="blue block">
+        <nav class="nav-extended blue z-depth-0" style="z-index: 1">
+            <div class="nav-wrapper blue">
+                <a href="/" th:href="@{/}" class="brand-logo center"><i class="material-icons">shopping_basket</i>Sklep</a>
+                <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+                <!-- FOR HIGHT RESOLUTION -->
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <!--li sec:authorize="isAuthenticated()"><label class="y" >
+                        Witaj <span sec:authentication="name"/>!
+                    </label></li-->
+
+                    <li sec:authorize="isAnonymous()" th:classappend="${pageName eq 'loginForm'}?'active'" ><a href="/login" th:href="@{/login}"><i class="material-icons left">account_circle</i>Zaloguj</a></li>
+                    <li sec:authorize="isAnonymous()" th:classappend="${pageName eq 'registerForm'}?'active'" ><a href="/user/register" th:href="@{/user/register}"><i class="material-icons left">perm_identity</i>Zarejestruj</a></li>
+
+                    <li sec:authorize="isAuthenticated()" th:classappend="${pageName eq 'walletInfo'}?'active'" >
+                        <a class="dropdown-button" href="#!" data-activates="dropdown_user"><i class="material-icons left">account_box</i>Twoje Konto<i class="right material-icons">arrow_drop_down</i></a>
+                    </li>
+                    <li sec:authorize="isAuthenticated()" th:classappend="${pageName eq 'balanceAdd'}?'active'" ><a href="/user/addbalace" th:href="@{/user/addbalance}"><i class="material-icons left">account_balance_wallet</i>[[${#numbers.formatDecimal(session.user.getWallet(),2,2,'POINT')}]] zł</a></li>
+                </ul>
+                <ul id="nav-mobile2" class="left hide-on-med-and-down">
+                    <li th:classappend="${pageName eq 'home'}?'active'" ><a href="/" th:href="@{/}"><i class="material-icons left">home</i>Główna</a></li>
+                    <!-- Dropdown Trigger -->
+                    <li th:classappend="${pageName eq 'vehicleForm'}?'active'"  ><a class="dropdown-button" href="#!" data-activates="dropdown_item"><i class="material-icons left">shop_two</i>Przedmioty<i class="material-icons right">arrow_drop_down</i></a></li>
+                </ul>
+
+                <!-- FOR LOW RESOLUTION -->
+                <ul id="slide-out" class="side-nav">
+                    <li><div class="user-view">
+                        <div class="background">
+                        </div>
+                        <a href="#!name"><span class="white-text name">John Doe</span></a>
+                        <a href="#!email"><span class="white-text email">jdandturk@gmail.com</span></a>
+                    </div></li>
+                    <li><a href="#!"><i class="material-icons">cloud</i>First Link With Icon</a></li>
+                    <li><a href="#!">Second Link</a></li>
+                    <li><div class="divider"></div></li>
+                    <li><a class="subheader">Subheader</a></li>
+                    <li><a class="waves-effect" href="#!">Third Link With Waves</a></li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

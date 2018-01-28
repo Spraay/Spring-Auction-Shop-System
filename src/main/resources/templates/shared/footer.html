@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<body>
+<div id="footer" th:fragment="footer">
+
+    <footer class="page-footer blue-grey darken-3" >
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Sklep Aukyjny</h5>
+                    <p class="grey-text text-lighten-4">Tutaj znajdziesz wszystko czego Ci potrzeba oraz kupisz to w satysfakcjonującej cenie!</p>
+                </div>
+                <div class="col l4 offset-l2 s12">
+                    <h5 class="white-text">Odnośniki</h5>
+                    <ul>
+                        <li><a class="grey-text text-lighten-3" href="#!">Lista Przedmiotów</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Koszyk</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Profil</a></li>
+                        <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                © 2017-2018 Krystian Rytel, projekt sklepu akcyjnego na potrzeby uczelnianego projektu.
+                <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+        </div>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="/webjars/materializecss/0.100.2/js/materialize.js"></script>
+        <script type="text/javascript" src="/statics/js/script.js"></script>
+        <div th:if="${message != null}">
+            <script th:inline="javascript">
+                /*<![CDATA[*/
+                    $(document).ready(function(){
+                        var message = [[${message}]];
+                        Materialize.toast(message, 4000);
+                    });
+                /*]]>*/
+            </script>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

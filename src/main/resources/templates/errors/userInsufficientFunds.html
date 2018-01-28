@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="shared/header :: header-css"/>
+    <title>Ups! Błąd</title>
+</head>
+<body>
+<div th:replace="shared/header :: header('error')"/>
+
+<main class="grey darken-4">
+    <div>
+        <h1 class="white-text">Błąd portfela</h1>
+        <div class="white-text">
+            URL żądania: <span th:text="${url}"></span></br>
+            Wyjątek: <span th:object="${exception}" th:text="*{message}"></span>
+        </div>
+    </div>
+</main>
+<div th:replace="shared/footer :: footer"></div>
+</body>
+</html>
